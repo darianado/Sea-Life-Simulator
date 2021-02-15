@@ -1,4 +1,5 @@
 import java.util.List;
+import java.util.Random;
 
 /**
  * A class representing shared characteristics of animals.
@@ -14,26 +15,39 @@ public abstract class Animal
     private Field field;
     // The animal's position in the field.
     private Location location;
-    
+
+    private static final Random rand = Randomizer.getRandom();
+
+    private int age;
+
     /**
      * Create a new animal at location in field.
      * 
      * @param field The field currently occupied.
      * @param location The location within the field.
      */
-    public Animal(Field field, Location location)
+    public Animal(Field field, Location location,int age)
     {
         alive = true;
         this.field = field;
         setLocation(location);
+        this.age=age;
     }
-    
+
     /**
      * Make this animal act - that is: make it do
      * whatever it wants/needs to do.
      * @param newAnimals A list to receive newly born animals.
      */
     abstract public void act(List<Animal> newAnimals);
+
+    abstract public double getBreedingProb();
+
+    abstract public int getMaxLitterSize();
+
+    abstract public boolean canBreed();
+    
+    abstract public int getMaxAge();
 
     /**
      * Check whether the animal is alive or not.
@@ -42,6 +56,39 @@ public abstract class Animal
     protected boolean isAlive()
     {
         return alive;
+    }
+
+    /**
+     * Generate a number representing the number of births,
+     * if it can breed.
+     * @return The number of births (may be zero).
+     */
+    protected int breed()
+    {
+        int births = 0;
+        if(canBreed() && rand.nextDouble() <= getBreedingProb()) {
+            births = rand.nextInt(getMaxLitterSize()) + 1;
+        }
+        return births;
+    }
+
+    
+    protected int getAge()
+    {
+        return age;
+    }
+
+    protected void setAge(int age)
+    {
+        this.age=age;
+    }
+
+    protected void incrementAge()
+    {
+        age++;
+        if(getAge() > getMaxAge()) {
+            setDead();
+        }
     }
 
     /**
@@ -66,7 +113,7 @@ public abstract class Animal
     {
         return location;
     }
-    
+
     /**
      * Place the animal at the new location in the given field.
      * @param newLocation The animal's new location.
@@ -79,7 +126,7 @@ public abstract class Animal
         location = newLocation;
         field.place(this, newLocation);
     }
-    
+
     /**
      * Return the animal's field.
      * @return The animal's field.
