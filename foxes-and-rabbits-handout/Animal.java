@@ -15,6 +15,8 @@ public abstract class Animal
     private Field field;
     // The animal's position in the field.
     private Location location;
+    // The animals gender
+    private boolean isMale;
 
     private static final Random rand = Randomizer.getRandom();
 
@@ -32,6 +34,12 @@ public abstract class Animal
         this.field = field;
         setLocation(location);
         this.age=age;
+        isMale = rand.nextInt(2) == 0;
+    }
+
+    public boolean isMale()
+    {
+        return isMale;
     }
 
     /**
@@ -46,7 +54,7 @@ public abstract class Animal
     abstract public int getMaxLitterSize();
 
     abstract public boolean canBreed();
-    
+
     abstract public int getMaxAge();
 
     /**
@@ -72,7 +80,6 @@ public abstract class Animal
         return births;
     }
 
-    
     protected int getAge()
     {
         return age;

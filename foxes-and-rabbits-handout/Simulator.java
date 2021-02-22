@@ -31,7 +31,7 @@ public class Simulator
     private int step;
     // A graphical view of the simulation.
     private SimulatorView view;
-    
+
     /**
      * Construct a simulation field with default size.
      */
@@ -39,7 +39,7 @@ public class Simulator
     {
         this(DEFAULT_DEPTH, DEFAULT_WIDTH);
     }
-    
+
     /**
      * Create a simulation field with the given size.
      * @param depth Depth of the field. Must be greater than zero.
@@ -53,7 +53,7 @@ public class Simulator
             depth = DEFAULT_DEPTH;
             width = DEFAULT_WIDTH;
         }
-        
+
         animals = new ArrayList<>();
         field = new Field(depth, width);
 
@@ -64,11 +64,11 @@ public class Simulator
         view.setColor(Fish.class, Color.RED);
         view.setColor(Seal.class, Color.GRAY);
         view.setColor(Shark.class, Color.BLACK);
-        
+
         // Setup a valid starting point.
         reset();
     }
-    
+
     /**
      * Run the simulation from its current state for a reasonably long period,
      * (4000 steps).
@@ -77,7 +77,7 @@ public class Simulator
     {
         simulate(4000);
     }
-    
+
     /**
      * Run the simulation from its current state for the given number of steps.
      * Stop before the given number of steps if it ceases to be viable.
@@ -90,7 +90,28 @@ public class Simulator
             // delay(60);   // uncomment this to run more slowly
         }
     }
-    
+
+    /**
+     * @return timeOfDay the current time of day
+     * if step % 24 < 6 or step % 24 >= 18, returns "night"
+     * if step % 24 >= 6 and step % < 12, returns "morning"
+     * otherwise, returns "afternoon"
+     */
+    public String getTimeOfDay()
+    {
+        int hour = step % 24;
+        if(hour < 6 || hour >= 18)
+        {
+            return "Night";
+        } else if(hour < 12)
+        {
+            return "Morning";
+        } else
+        {
+            return "Afternoon";
+        }
+    }
+
     /**
      * Run the simulation from its current state for a single step.
      * Iterate over the whole field updating the state of each
@@ -110,13 +131,13 @@ public class Simulator
                 it.remove();
             }
         }
-               
+
         // Add the newly born foxes and rabbits to the main lists.
         animals.addAll(newAnimals);
 
         view.showStatus(step, field);
     }
-        
+
     /**
      * Reset the simulation to a starting position.
      */
@@ -125,11 +146,11 @@ public class Simulator
         step = 0;
         animals.clear();
         populate();
-        
+
         // Show the starting state in the view.
         view.showStatus(step, field);
     }
-    
+
     /**
      * Randomly populate the field with foxes and rabbits.
      */
@@ -162,13 +183,13 @@ public class Simulator
                 else if(rand.nextDouble() <= RABBIT_CREATION_PROBABILITY) {
                     Location location = new Location(row, col);
                     Shark shark = new Shark(true, field, location);
-                     animals.add(shark);
+                    animals.add(shark);
                 }
                 // else leave the location empty.
             }
         }
     }
-    
+
     /**
      * Pause for a given time.
      * @param millisec  The time to pause for, in milliseconds
