@@ -135,7 +135,7 @@ public class Simulator
         // Add the newly born foxes and rabbits to the main lists.
         animals.addAll(newAnimals);
 
-        view.showStatus(step, field);
+        view.showStatus(step, getTimeOfDay(), field);
     }
 
     /**
@@ -148,7 +148,7 @@ public class Simulator
         populate();
 
         // Show the starting state in the view.
-        view.showStatus(step, field);
+        view.showStatus(step, getTimeOfDay(), field);
     }
 
     /**

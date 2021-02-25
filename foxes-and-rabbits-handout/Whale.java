@@ -37,7 +37,7 @@ public class Whale extends Predator
      * @param field The field currently occupied.
      * @param location The location within the field.
      */
-    public Whale(boolean randomAge, Field field, Location location)
+    public Whale(boolean randomAge, Field field, Location location, Class prey)
     {
         super(randomAge,field, location,0,Krill.class);
         if(randomAge) {
@@ -48,6 +48,7 @@ public class Whale extends Predator
             setFoodLevel(FOOD_VALUE);
         }
     }
+    
     public double getBreedingProb()
     {
         return BREEDING_PROBABILITY;
@@ -125,19 +126,19 @@ public class Whale extends Predator
      * New births will be made into free adjacent locations.
      * @param newFoxes A list to return newly born foxes.
      */
-    private void giveBirth(List<Animal> newWhalees)
-    {
+    //protected void giveBirth(List<Animal> newWhalees)
+    //{
         // New foxes are born into adjacent locations.
         // Get a list of adjacent free locations.
-        Field field = getField();
-        List<Location> free = field.getFreeAdjacentLocations(getLocation());
-        int births = breed();
-        for(int b = 0; b < births && free.size() > 0; b++) {
-            Location loc = free.remove(0);
-            Whale young = new Whale(false, field, loc);
-            newWhalees.add(young);
-        }
-    }
+    //    Field field = getField();
+    //    List<Location> free = field.getFreeAdjacentLocations(getLocation());
+    //    int births = breed();
+    //    for(int b = 0; b < births && free.size() > 0; b++) {
+    //        Location loc = free.remove(0);
+    //        Whale young = new Whale(false, field, loc);
+    //        newWhalees.add(young);
+    //    }
+    //}
         
     
 }

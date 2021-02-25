@@ -121,23 +121,23 @@ public class Seal extends Predator
     }
    
     
-    /**
-     * Check whether or not this fox is to give birth at this step.
-     * New births will be made into free adjacent locations.
-     * @param newFoxes A list to return newly born foxes.
-     */
-    private void giveBirth(List<Animal> newSeals)
-    {
+    ///**
+    // * Check whether or not this fox is to give birth at this step.
+    // * New births will be made into free adjacent locations.
+    // * @param newFoxes A list to return newly born foxes.
+    // */
+    //protected void giveBirth(List<Animal> newSeals)
+    //{
         // New foxes are born into adjacent locations.
         // Get a list of adjacent free locations.
-        Field field = getField();
-        List<Location> free = field.getFreeAdjacentLocations(getLocation());
-        int births = breed();
-        for(int b = 0; b < births && free.size() > 0; b++) {
-            Location loc = free.remove(0);
-            Seal young = new Seal(false, field, loc);
-            newSeals.add(young);
-        }
-    }
+    //    Field field = getField();
+    //    List<Location> free = field.getFreeAdjacentLocations(getLocation());
+    //    int births = breed();
+    //    for(int b = 0; b < births && free.size() > 0; b++) {
+    //        Location loc = free.remove(0);
+    //        Seal young = new Seal(false, field, loc);
+    //        newSeals.add(young);
+    //    }
+    //}
    
 }

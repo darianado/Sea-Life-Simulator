@@ -1,5 +1,6 @@
 import java.util.List;
 import java.util.Random;
+import java.util.Iterator;
 
 /**
  * A simple model of a rabbit.
@@ -89,24 +90,37 @@ public class Krill extends Animal
    
     
     
-    /**
-     * Check whether or not this rabbit is to give birth at this step.
-     * New births will be made into free adjacent locations.
-     * @param newRabbits A list to return newly born rabbits.
-     */
-    private void giveBirth(List<Animal> newKrills)
-    {
+    ///**
+    // * Check whether or not this rabbit is to give birth at this step.
+    // * New births will be made into free adjacent locations.
+    // * @param newRabbits A list to return newly born rabbits.
+    // */
+    //private void giveBirth(List<Animal> newKrills)
+    //{
         // New rabbits are born into adjacent locations.
         // Get a list of adjacent free locations.
-        Field field = getField();
-        List<Location> free = field.getFreeAdjacentLocations(getLocation());
-        int births = breed();
-        for(int b = 0; b < births && free.size() > 0; b++) {
-            Location loc = free.remove(0);
-            Krill young = new Krill(false, field, loc);
-            newKrills.add(young);
-        }
-    }
+    //    if(isMale()) return;
+    //    Field field = getField();
+    //    List<Location> free = field.getFreeAdjacentLocations(getLocation());
+    //    List<Location> notFree = field.adjacentLocations(getLocation());//should be same breed and male
+    //    Iterator<Location> iterator = notFree.iterator();
+    //    
+    //    while(iterator.hasNext())
+    //    {
+    //        Location next = iterator.next();
+    //        Object element = field.getObjectAt(next);
+    //        if(element instanceof Krill)
+    //        {
+    //            
+    //        }
+    //    }
+    //    int births = breed();
+    //    for(int b = 0; b < births && free.size() > 0; b++) {
+    //        Location loc = free.remove(0);
+    //        Krill young = new Krill(false, field, loc);
+    //        newKrills.add(young);
+    //    }
+    //}
         
    
 

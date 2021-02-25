@@ -84,24 +84,24 @@ public class Fish extends Animal
         }
     }
     
-    /**
-     * Check whether or not this rabbit is to give birth at this step.
-     * New births will be made into free adjacent locations.
-     * @param newRabbits A list to return newly born rabbits.
-     */
-    private void giveBirth(List<Animal> newFish)
-    {
+    ///**
+    // * Check whether or not this rabbit is to give birth at this step.
+    // * New births will be made into free adjacent locations.
+    // * @param newRabbits A list to return newly born rabbits.
+    // */
+    //protected void giveBirth(List<Animal> newFish)
+    //{
         // New rabbits are born into adjacent locations.
         // Get a list of adjacent free locations.
-        Field field = getField();
-        List<Location> free = field.getFreeAdjacentLocations(getLocation());
-        int births = breed();
-        for(int b = 0; b < births && free.size() > 0; b++) {
-            Location loc = free.remove(0);
-            Fish young = new Fish(false, field, loc);
-            newFish.add(young);
-        }
-    }
+    //    Field field = getField();
+    //    List<Location> free = field.getFreeAdjacentLocations(getLocation());
+    //    int births = breed();
+    //    for(int b = 0; b < births && free.size() > 0; b++) {
+    //        Location loc = free.remove(0);
+    //        Fish young = new Fish(false, field, loc);
+    //        newFish.add(young);
+    //    }
+    //}
         
     
 }
