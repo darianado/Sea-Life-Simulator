@@ -16,14 +16,16 @@ public class Whale extends Predator
     // The age at which a fox can start to breed.
     private static final int BREEDING_AGE = 10;
     // The age to which a fox can live.
-    private static final int MAX_AGE = 200;
+    private static final int MAX_AGE = 100;
     // The likelihood of a fox breeding.
-    private static final double BREEDING_PROBABILITY = 0.08;
+    private static final double BREEDING_PROBABILITY = 0.99;
     // The maximum number of births.
-    private static final int MAX_LITTER_SIZE = 2;
+    private static final int MAX_LITTER_SIZE = 3;
     // The food value of a single rabbit. In effect, this is the
     // number of steps a fox can go before it has to eat again.
-    private static final int FOOD_VALUE = 9;
+    private static final int FOOD_VALUE =20;
+    
+    private static final int GAP_BETWEEN_BREEDING = 5;
     // A shared random number generator to control breeding.
     private static final Random rand = Randomizer.getRandom();
     
@@ -37,7 +39,7 @@ public class Whale extends Predator
      * @param field The field currently occupied.
      * @param location The location within the field.
      */
-    public Whale(boolean randomAge, Field field, Location location, Class prey)
+    public Whale(boolean randomAge, Field field, Location location)
     {
         super(randomAge,field, location,0,Krill.class);
         if(randomAge) {
@@ -47,6 +49,14 @@ public class Whale extends Predator
         else {
             setFoodLevel(FOOD_VALUE);
         }
+    }
+    public Animal getYoung(Field field, Location loc)
+    {
+        return new Whale(false,field,loc);
+    }
+    public int getGapBreeding()
+    {
+        return GAP_BETWEEN_BREEDING;
     }
     
     public double getBreedingProb()
@@ -81,12 +91,14 @@ public class Whale extends Predator
      * @param field The field currently occupied.
      * @param newFoxes A list to return newly born foxes.
      */
-    public void act(List<Animal> newWhales)
+    public void act(List<Animal> newWhales, String timeOfDay)
     {
         incrementAge();
         incrementHunger();
+        incrementLastBred();
         if(isAlive()) {
-            giveBirth(newWhales);            
+             if(!hasBred())
+                giveBirth(newWhales, timeOfDay);            
             // Move towards a source of food if found.
             Location newLocation = findFood();
             if(newLocation == null) { 

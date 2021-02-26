@@ -19,7 +19,7 @@ public class Simulator
     // The default depth of the grid.
     private static final int DEFAULT_DEPTH = 80;
     // The probability that a fox will be created in any given grid position.
-    private static final double FOX_CREATION_PROBABILITY = 0.02;
+    private static final double FOX_CREATION_PROBABILITY = 0.05;
     // The probability that a rabbit will be created in any given grid position.
     private static final double RABBIT_CREATION_PROBABILITY = 0.08;    
 
@@ -75,7 +75,7 @@ public class Simulator
      */
     public void runLongSimulation()
     {
-        simulate(4000);
+        simulate(400);
     }
 
     /**
@@ -126,7 +126,8 @@ public class Simulator
         // Let all rabbits act.
         for(Iterator<Animal> it = animals.iterator(); it.hasNext(); ) {
             Animal animal = it.next();
-            animal.act(newAnimals);
+            
+            animal.act(newAnimals, getTimeOfDay());
             if(! animal.isAlive()) {
                 it.remove();
             }
@@ -137,6 +138,8 @@ public class Simulator
 
         view.showStatus(step, getTimeOfDay(), field);
     }
+    
+    
 
     /**
      * Reset the simulation to a starting position.
@@ -165,12 +168,12 @@ public class Simulator
                     Whale whale = new Whale(true, field, location);
                     animals.add(whale);
                 }
-                else if(rand.nextDouble() <= RABBIT_CREATION_PROBABILITY) {
+                else if(rand.nextDouble() <= FOX_CREATION_PROBABILITY) {
                     Location location = new Location(row, col);
                     Krill krill = new Krill(true, field, location);
                     animals.add(krill);
                 }
-                else if(rand.nextDouble() <= RABBIT_CREATION_PROBABILITY) {
+                else if(rand.nextDouble() <= FOX_CREATION_PROBABILITY) {
                     Location location = new Location(row, col);
                     Fish fish = new Fish(true, field, location);
                     animals.add(fish);
@@ -180,7 +183,7 @@ public class Simulator
                     Seal seal = new Seal(true, field, location);
                     animals.add(seal);
                 }
-                else if(rand.nextDouble() <= RABBIT_CREATION_PROBABILITY) {
+                else if(rand.nextDouble() <= FOX_CREATION_PROBABILITY) {
                     Location location = new Location(row, col);
                     Shark shark = new Shark(true, field, location);
                     animals.add(shark);

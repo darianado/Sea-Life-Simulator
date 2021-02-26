@@ -16,11 +16,13 @@ public class Krill extends Animal
     // The age at which a rabbit can start to breed.
     private static final int BREEDING_AGE = 2;
     // The age to which a rabbit can live.
-    private static final int MAX_AGE = 10;
+    private static final int MAX_AGE = 30;
     // The likelihood of a rabbit breeding.
-    private static final double BREEDING_PROBABILITY = 0.08;
+    private static final double BREEDING_PROBABILITY = 0.99;
     // The maximum number of births.
-    private static final int MAX_LITTER_SIZE = 5;
+    private static final int MAX_LITTER_SIZE = 7;
+    
+    private static final int GAP_BETWEEN_BREEDING = 2;
     // A shared random number generator to control breeding.
     private static final Random rand = Randomizer.getRandom();
     
@@ -41,18 +43,28 @@ public class Krill extends Animal
             setAge(rand.nextInt(MAX_AGE));
         }
     }
+    public Animal getYoung(Field field, Location loc)
+    {
+        return new Krill(false,field,loc);
+    }
+    
+    public int getGapBreeding()
+    {
+        return GAP_BETWEEN_BREEDING;
+    }
     
     /**
      * This is what the rabbit does most of the time - it runs 
      * around. Sometimes it will breed or die of old age.
      * @param newRabbits A list to return newly born rabbits.
      */
-    public void act(List<Animal> newKrills)
+    public void act(List<Animal> newKrills, String timeOfDay)
     {
         incrementAge();
-        
+        incrementLastBred();
         if(isAlive()) {
-            giveBirth(newKrills);            
+            if(!hasBred())
+                giveBirth(newKrills, timeOfDay);            
             // Try to move into a free location.
             Location newLocation = getField().freeAdjacentLocation(getLocation());
             if(newLocation != null) {

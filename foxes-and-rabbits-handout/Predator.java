@@ -42,7 +42,7 @@ abstract public class Predator extends Animal
 
     protected void setFoodLevel(int food)
     {
-        foodLevel =food;
+        foodLevel = food;
     }
 
     protected int getFoodLevel()

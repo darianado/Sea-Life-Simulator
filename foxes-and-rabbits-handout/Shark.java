@@ -14,16 +14,18 @@ public class Shark extends Predator
     // Characteristics shared by all foxes (class variables).
  
     // The age at which a fox can start to breed.
-    private static final int BREEDING_AGE = 10;
+    private static final int BREEDING_AGE = 5;
     // The age to which a fox can live.
-    private static final int MAX_AGE = 80;
+    private static final int MAX_AGE = 50;
     // The likelihood of a fox breeding.
-    private static final double BREEDING_PROBABILITY = 0.10;
+    private static final double BREEDING_PROBABILITY = 0.99;
     // The maximum number of births.
-    private static final int MAX_LITTER_SIZE = 2;
+    private static final int MAX_LITTER_SIZE = 3;
     // The food value of a single rabbit. In effect, this is the
     // number of steps a fox can go before it has to eat again.
-    private static final int FOOD_VALUE = 9;
+    private static final int FOOD_VALUE = 12;
+    
+    private static final int GAP_BETWEEN_BREEDING = 5;
     // A shared random number generator to control breeding.
     private static final Random rand = Randomizer.getRandom();
     
@@ -37,7 +39,7 @@ public class Shark extends Predator
      * @param field The field currently occupied.
      * @param location The location within the field.
      */
-    public Shark(boolean randomAge, Field field, Location location, Class prey)
+    public Shark(boolean randomAge, Field field, Location location)
     {
         super(randomAge,field, location,0,Fish.class);
         if(randomAge) {
@@ -48,6 +50,10 @@ public class Shark extends Predator
             setFoodLevel(FOOD_VALUE);
         }
     }
+    public Animal getYoung(Field field, Location loc)
+    {
+        return new Shark(false,field,loc);
+    }
     public double getBreedingProb()
     {
         return BREEDING_PROBABILITY;
@@ -55,6 +61,10 @@ public class Shark extends Predator
     public int getMaxLitterSize()
     {
         return MAX_LITTER_SIZE;
+    }
+    public int getGapBreeding()
+    {
+        return GAP_BETWEEN_BREEDING;
     }
      public int getMaxAge()
     {
@@ -80,12 +90,14 @@ public class Shark extends Predator
      * @param field The field currently occupied.
      * @param newFoxes A list to return newly born foxes.
      */
-    public void act(List<Animal> newSharks)
+    public void act(List<Animal> newSharks, String timeOfDay)
     {
         incrementAge();
         incrementHunger();
+        incrementLastBred();
         if(isAlive()) {
-            giveBirth(newSharks);            
+             if(!hasBred())
+                giveBirth(newSharks, timeOfDay);           
             // Move towards a source of food if found.
             Location newLocation = findFood();
             if(newLocation == null) { 

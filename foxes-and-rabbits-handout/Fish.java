@@ -15,11 +15,13 @@ public class Fish extends Animal
     // The age at which a rabbit can start to breed.
     private static final int BREEDING_AGE = 2;
     // The age to which a rabbit can live.
-    private static final int MAX_AGE = 10;
+    private static final int MAX_AGE = 20;
     // The likelihood of a rabbit breeding.
-    private static final double BREEDING_PROBABILITY = 0.12;
+    private static final double BREEDING_PROBABILITY = 0.99;
     // The maximum number of births.
-    private static final int MAX_LITTER_SIZE = 10;
+    private static final int MAX_LITTER_SIZE = 5;
+    
+    private static final int GAP_BETWEEN_BREEDING = 5;
     // A shared random number generator to control breeding.
     private static final Random rand = Randomizer.getRandom();
     
@@ -39,6 +41,14 @@ public class Fish extends Animal
         if(randomAge) {
             setAge(rand.nextInt(MAX_AGE));
         }
+    }
+    public Animal getYoung(Field field, Location loc)
+    {
+        return new Fish(false,field,loc);
+    }
+    public int getGapBreeding()
+    {
+        return GAP_BETWEEN_BREEDING;
     }
     public double getBreedingProb()
     {
@@ -67,11 +77,13 @@ public class Fish extends Animal
      * around. Sometimes it will breed or die of old age.
      * @param newRabbits A list to return newly born rabbits.
      */
-    public void act(List<Animal> newFish)
+    public void act(List<Animal> newFish, String timeOfDay)
     {
         incrementAge();
+        incrementLastBred();
         if(isAlive()) {
-            giveBirth(newFish);            
+             if(!hasBred())
+                giveBirth(newFish, timeOfDay);            
             // Try to move into a free location.
             Location newLocation = getField().freeAdjacentLocation(getLocation());
             if(newLocation != null) {

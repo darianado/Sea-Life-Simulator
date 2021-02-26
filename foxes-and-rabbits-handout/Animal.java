@@ -19,12 +19,14 @@ public abstract class Animal
     // The animals gender
     private boolean isMale;
     //
-    private boolean hasBred;
-    
+    //private boolean hasBred;
+
+    private int lastBred;
+
     private static final Random rand = Randomizer.getRandom();
 
     private int age;
-    
+
     /**
      * Create a new animal at location in field.
      * 
@@ -38,26 +40,33 @@ public abstract class Animal
         setLocation(location);
         this.age=age;
         isMale = rand.nextInt(2) == 0;
+        lastBred=getGapBreeding();
     }
-    public void setHasBred(boolean hasBred)
+
+    public boolean hasBred()
     {
-        this.hasBred = hasBred;
+        // if(lastBred>=getGapBreeding())
+        // {lastBred = 0; return true;
+            // return false;
+        // }
+        return lastBred < getGapBreeding();
     }
+    // public void setHasBred(boolean hasBred)
+    // {
+        // this.hasBred = hasBred;
+    // }
+
     public boolean isMale()
     {
         return isMale;
     }
-    public boolean hasBred()
-    {
-        return hasBred;
-    }
-
+   
     /**
      * Make this animal act - that is: make it do
      * whatever it wants/needs to do.
      * @param newAnimals A list to receive newly born animals.
      */
-    abstract public void act(List<Animal> newAnimals);
+    abstract public void act(List<Animal> newAnimals, String timeOfDay);
 
     abstract public double getBreedingProb();
 
@@ -66,6 +75,9 @@ public abstract class Animal
     abstract public boolean canBreed();
 
     abstract public int getMaxAge();
+
+    abstract public int getGapBreeding();
+
     /**
      * Check whether the animal is alive or not.
      * @return true if the animal is still alive.
@@ -80,54 +92,75 @@ public abstract class Animal
      * if it can breed.
      * @return The number of births (may be zero).
      */
-    protected int breed()
+    protected int breed(String timeOfDay)
     {
         int births = 0;
-        if(canBreed() && rand.nextDouble() <= getBreedingProb()) {
+        if(canBreed() && rand.nextDouble() <= getBreedingProb() * (timeOfDay == "Night" ? 0.7 : 1.0)) {
             births = rand.nextInt(getMaxLitterSize()) + 1;
         }
         return births;
     }
-   
-    
+
+    public void updateBreeding() 
+    {
+        // if(lastBred==true) lastBred++;
+        // if(lastBred>= getGapBreeding())
+        // {
+            // lastBred=0;
+            // setHasBred(false);
+        // }
+       
+        if(lastBred>= getGapBreeding()) lastBred=0;
+        
+        
+    }
+    public void incrementLastBred()
+    {
+         lastBred++;
+    }
+
     public Class getThisClass()
     {
         return getClass();
     }
+
     /**
      * Check whether or not this rabbit is to give birth at this step.
      * New births will be made into free adjacent locations.
      * @param newRabbits A list to return newly born rabbits.
      */
-    protected void giveBirth(List<Animal> newKrills)
+    protected void giveBirth(List<Animal> newAnimals, String timeOfDay)
     {
         // New rabbits are born into adjacent locations.
         // Get a list of adjacent free locations.
         if(isMale()) return;
-        
+
         Field field = getField();
-        
+
         Animal mate = findMale(field);
         if(mate == null || mate.hasBred()) return;
-        
-        mate.setHasBred(true);
-        setHasBred(true);
-        
+
+        mate.updateBreeding();
+        updateBreeding();
+
         List<Location> free = field.getFreeAdjacentLocations(getLocation());
-        int births = breed();
-        
+        int births = breed(timeOfDay);
+
         for(int b = 0; b < births && free.size() > 0; b++) {
             Location loc = free.remove(0);
-            Animal young = new Krill(false, field, loc);
-            newKrills.add(young);
+            Animal young = getYoung(field,loc);
+            newAnimals.add(young);
         }
     }
+
+    abstract public Animal getYoung(Field field, Location loc);
+
     private Animal findMale(Field field)
     {
         List<Location> notFree = field.adjacentLocations(getLocation());
-        
+
         Iterator<Location> iterator = notFree.iterator();
-        
+
         while(iterator.hasNext())
         {
             Location next = iterator.next();
@@ -140,6 +173,7 @@ public abstract class Animal
         }
         return null;
     }
+
     protected int getAge()
     {
         return age;
