@@ -3,26 +3,25 @@ import java.util.Iterator;
 import java.util.Random;
 
 /**
- * A simple model of a fox.
- * Foxes age, move, eat rabbits, and die.
+ * A simple model of a seal.
  * 
- * @author David J. Barnes and Michael Kölling
- * @version 2016.02.29 (2)
+ * @author Dorin Dariana, Luke Ayres
+ * @version feb.2021
  */
 public class Seal extends Predator
 {
-    // Characteristics shared by all foxes (class variables).
+    // Characteristics shared by all seals (class variables).
     
-    // The age at which a fox can start to breed.
+    // The age at which a seal can start to breed.
     private static final int BREEDING_AGE = 2;
-    // The age to which a fox can live.
+    // The age to which a seal can live.
     private static final int MAX_AGE = 60;
-    // The likelihood of a fox breeding.
+    // The likelihood of a seal breeding.
     private static final double BREEDING_PROBABILITY = 0.99;
     // The maximum number of births.
     private static final int MAX_LITTER_SIZE = 2;
-    // The food value of a single rabbit. In effect, this is the
-    // number of steps a fox can go before it has to eat again.
+    // The food value of a single seal. In effect, this is the
+    // number of steps a seal can go before it has to eat again.
     private static final int FOOD_VALUE = 3;
     
     private static final int GAP_BETWEEN_BREEDING = 10;
@@ -31,10 +30,10 @@ public class Seal extends Predator
 
 
     /**
-     * Create a fox. A fox can be created as a new born (age zero
+     * Create a seal. A seal can be created as a new born (age zero
      * and not hungry) or with a random age and food level.
      * 
-     * @param randomAge If true, the fox will have random age and hunger level.
+     * @param randomAge If true, the seal will have random age and hunger level.
      * @param field The field currently occupied.
      * @param location The location within the field.
      */
@@ -89,11 +88,11 @@ public class Seal extends Predator
     
     
     /**
-     * This is what the fox does most of the time: it hunts for
-     * rabbits. In the process, it might breed, die of hunger,
+     * This is what the seal does most of the time: it hunts for
+     * krills. In the process, it might breed, die of hunger,
      * or die of old age.
-     * @param field The field currently occupied.
-     * @param newFoxes A list to return newly born foxes.
+     * @param timeOfDay The current time of day he acts in
+     * @param newSeals A list to return newly born seals.
      */
     public void act(List<Animal> newSeals, String timeOfDay)
     {
@@ -119,37 +118,4 @@ public class Seal extends Predator
             }
         }
     }
-
-    
-    /**
-     * Make this fox more hungry. This could result in the fox's death.
-     */
-    private void incrementHunger()
-    {
-        decrementFoodLevel();
-        if(getFoodLevel() <= 0) {
-            setDead();
-        }
-    }
-   
-    
-    ///**
-    // * Check whether or not this fox is to give birth at this step.
-    // * New births will be made into free adjacent locations.
-    // * @param newFoxes A list to return newly born foxes.
-    // */
-    //protected void giveBirth(List<Animal> newSeals)
-    //{
-        // New foxes are born into adjacent locations.
-        // Get a list of adjacent free locations.
-    //    Field field = getField();
-    //    List<Location> free = field.getFreeAdjacentLocations(getLocation());
-    //    int births = breed();
-    //    for(int b = 0; b < births && free.size() > 0; b++) {
-    //        Location loc = free.remove(0);
-    //        Seal young = new Seal(false, field, loc);
-    //        newSeals.add(young);
-    //    }
-    //}
-   
 }

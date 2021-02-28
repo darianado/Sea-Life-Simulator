@@ -5,8 +5,8 @@ import java.util.Iterator;
 /**
  * A class representing shared characteristics of animals.
  * 
- * @author David J. Barnes and Michael Kölling
- * @version 2016.02.29 (2)
+ * @author David J. Barnes and Michael Kölling, Dorin Dariana, Luke Ayres
+ * @version feb.2021
  */
 public abstract class Animal
 {
@@ -18,20 +18,19 @@ public abstract class Animal
     private Location location;
     // The animals gender
     private boolean isMale;
-    //
-    //private boolean hasBred;
-
+    //counter of steps since last bred
     private int lastBred;
+    //the age of that animal
+    private int age;
 
     private static final Random rand = Randomizer.getRandom();
-
-    private int age;
 
     /**
      * Create a new animal at location in field.
      * 
      * @param field The field currently occupied.
      * @param location The location within the field.
+     * @param age The age of the animal
      */
     public Animal(Field field, Location location,int age)
     {
@@ -43,39 +42,57 @@ public abstract class Animal
         lastBred=getGapBreeding();
     }
 
+    /**
+     * Get if the animal has bred recently enough 
+     * that he momentarily can't breed again
+     * @return true if he has bred recently and can't 
+     *         breed right now or false otherwise
+     */
     public boolean hasBred()
     {
-        // if(lastBred>=getGapBreeding())
-        // {lastBred = 0; return true;
-            // return false;
-        // }
         return lastBred < getGapBreeding();
     }
-    // public void setHasBred(boolean hasBred)
-    // {
-        // this.hasBred = hasBred;
-    // }
 
+    /**
+     * Get if the animal gender
+     * @return true if he is a male or false if it is female
+     */
     public boolean isMale()
     {
         return isMale;
     }
-   
+
     /**
      * Make this animal act - that is: make it do
      * whatever it wants/needs to do.
      * @param newAnimals A list to receive newly born animals.
+     * @param timeOfDay the current time of day he needs to act
      */
     abstract public void act(List<Animal> newAnimals, String timeOfDay);
 
+    /**
+     * @return the animal's specific breeding probability
+     */
     abstract public double getBreedingProb();
 
+     /**
+     * @return the animal's specific maximum litter size
+     */
     abstract public int getMaxLitterSize();
 
+     /**
+     * @return true if the animal can breed
+     */
     abstract public boolean canBreed();
 
+    /**
+     * @return the animal's specific maximum life span
+     */
     abstract public int getMaxAge();
 
+    /**
+     * @return the animal's specific gap of steps needed to breed again
+     */
     abstract public int getGapBreeding();
 
     /**
@@ -90,6 +107,7 @@ public abstract class Animal
     /**
      * Generate a number representing the number of births,
      * if it can breed.
+     * @param timeOfDay the current time of day the breeding takes place
      * @return The number of births (may be zero).
      */
     protected int breed(String timeOfDay)
@@ -101,48 +119,41 @@ public abstract class Animal
         return births;
     }
 
+    /**
+     * Check and update the animal last bred counter
+     */
     public void updateBreeding() 
     {
-        // if(lastBred==true) lastBred++;
-        // if(lastBred>= getGapBreeding())
-        // {
-            // lastBred=0;
-            // setHasBred(false);
-        // }
-       
         if(lastBred>= getGapBreeding()) lastBred=0;
-        
-        
-    }
-    public void incrementLastBred()
-    {
-         lastBred++;
-    }
-
-    public Class getThisClass()
-    {
-        return getClass();
     }
 
     /**
-     * Check whether or not this rabbit is to give birth at this step.
-     * New births will be made into free adjacent locations.
-     * @param newRabbits A list to return newly born rabbits.
+     * Increment the last bred counter
+     */
+    public void incrementLastBred()
+    {
+        lastBred++;
+    }
+  
+    /**
+     * Check whether or not this animal is to give birth at this step.
+     * New animals will be made into free adjacent locations.
+     * @param newAnimals A list to return newly born animals.
+     * @param timeOfDay the current time of day the birth takes place
      */
     protected void giveBirth(List<Animal> newAnimals, String timeOfDay)
     {
-        // New rabbits are born into adjacent locations.
-        // Get a list of adjacent free locations.
+        //the male can't give birth
         if(isMale()) return;
-
-        Field field = getField();
-
-        Animal mate = findMale(field);
+        
+        //the female cant give birth without a male mate
+        Animal mate = findMale();
         if(mate == null || mate.hasBred()) return;
 
         mate.updateBreeding();
         updateBreeding();
 
+        // Get a list of adjacent free locations.
         List<Location> free = field.getFreeAdjacentLocations(getLocation());
         int births = breed(timeOfDay);
 
@@ -153,11 +164,22 @@ public abstract class Animal
         }
     }
 
+    /**
+     * Get a new baby of that specific animal
+     * @return a new born animal
+     * @param field The field of the young one
+     * @param loc The location of the young one
+     * 
+     */
     abstract public Animal getYoung(Field field, Location loc);
 
-    private Animal findMale(Field field)
+    /**
+     * Get a male mate if there is one in the adjacent location
+     * @return the mate animal found or null
+     */
+    private Animal findMale()
     {
-        List<Location> notFree = field.adjacentLocations(getLocation());
+        List<Location> notFree = getField().adjacentLocations(getLocation());
 
         Iterator<Location> iterator = notFree.iterator();
 
@@ -174,16 +196,26 @@ public abstract class Animal
         return null;
     }
 
+    /**
+     * @return the age of the animal
+     */
     protected int getAge()
     {
         return age;
     }
 
+    /**
+     * Set the age of the animal
+     * @param the age of the animal
+     */
     protected void setAge(int age)
     {
         this.age=age;
     }
 
+    /**
+     * Increment the age of the animal and set dead if too old
+     */
     protected void incrementAge()
     {
         age++;

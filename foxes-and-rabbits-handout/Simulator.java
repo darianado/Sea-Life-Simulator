@@ -6,10 +6,10 @@ import java.awt.Color;
 
 /**
  * A simple predator-prey simulator, based on a rectangular field
- * containing rabbits and foxes.
+ * containing sea animals.
  * 
- * @author David J. Barnes and Michael Kölling
- * @version 2016.02.29 (2)
+ * @author David J. Barnes and Michael Kölling, Dorin Dariana, Luke Ayres
+ * @version feb.2021
  */
 public class Simulator
 {
@@ -18,10 +18,9 @@ public class Simulator
     private static final int DEFAULT_WIDTH = 120;
     // The default depth of the grid.
     private static final int DEFAULT_DEPTH = 80;
-    // The probability that a fox will be created in any given grid position.
-    private static final double FOX_CREATION_PROBABILITY = 0.05;
-    // The probability that a rabbit will be created in any given grid position.
-    private static final double RABBIT_CREATION_PROBABILITY = 0.08;    
+    // The probability that an animal will be created in any given grid position.
+    private static final double CREATION_PROBABILITY = 0.05;
+    
 
     // List of animals in the field.
     private List<Animal> animals;
@@ -114,26 +113,24 @@ public class Simulator
 
     /**
      * Run the simulation from its current state for a single step.
-     * Iterate over the whole field updating the state of each
-     * fox and rabbit.
+     * Iterate over the whole field updating the state of each animal
      */
     public void simulateOneStep()
     {
         step++;
 
         // Provide space for newborn animals.
-        List<Animal> newAnimals = new ArrayList<>();        
-        // Let all rabbits act.
+        List<Animal> newAnimals = new ArrayList<>();
+        
         for(Iterator<Animal> it = animals.iterator(); it.hasNext(); ) {
             Animal animal = it.next();
-            
             animal.act(newAnimals, getTimeOfDay());
             if(! animal.isAlive()) {
                 it.remove();
             }
         }
 
-        // Add the newly born foxes and rabbits to the main lists.
+        // Add the newly born animals to the main lists.
         animals.addAll(newAnimals);
 
         view.showStatus(step, getTimeOfDay(), field);
@@ -163,27 +160,27 @@ public class Simulator
         field.clear();
         for(int row = 0; row < field.getDepth(); row++) {
             for(int col = 0; col < field.getWidth(); col++) {
-                if(rand.nextDouble() <= FOX_CREATION_PROBABILITY) {
+                if(rand.nextDouble() <= CREATION_PROBABILITY) {
                     Location location = new Location(row, col);
                     Whale whale = new Whale(true, field, location);
                     animals.add(whale);
                 }
-                else if(rand.nextDouble() <= FOX_CREATION_PROBABILITY) {
+                else if(rand.nextDouble() <= CREATION_PROBABILITY) {
                     Location location = new Location(row, col);
                     Krill krill = new Krill(true, field, location);
                     animals.add(krill);
                 }
-                else if(rand.nextDouble() <= FOX_CREATION_PROBABILITY) {
+                else if(rand.nextDouble() <= CREATION_PROBABILITY) {
                     Location location = new Location(row, col);
                     Fish fish = new Fish(true, field, location);
                     animals.add(fish);
                 }
-                else if(rand.nextDouble() <= FOX_CREATION_PROBABILITY) {
+                else if(rand.nextDouble() <= CREATION_PROBABILITY) {
                     Location location = new Location(row, col);
                     Seal seal = new Seal(true, field, location);
                     animals.add(seal);
                 }
-                else if(rand.nextDouble() <= FOX_CREATION_PROBABILITY) {
+                else if(rand.nextDouble() <= CREATION_PROBABILITY) {
                     Location location = new Location(row, col);
                     Shark shark = new Shark(true, field, location);
                     animals.add(shark);

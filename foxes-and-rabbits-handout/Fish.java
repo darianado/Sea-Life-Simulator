@@ -2,21 +2,20 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * A simple model of a rabbit.
- * Rabbits age, move, breed, and die.
+ * A simple model of a fish
  * 
- * @author David J. Barnes and Michael Kölling
- * @version 2016.02.29 (2)
+ * @author Dorin Dariana, Luke Ayres
+ * @version feb.2021
  */
 public class Fish extends Animal
 {
-    // Characteristics shared by all rabbits (class variables).
+    // Characteristics shared by all fish (class variables).
 
-    // The age at which a rabbit can start to breed.
+    // The age at which a fish can start to breed.
     private static final int BREEDING_AGE = 2;
-    // The age to which a rabbit can live.
+    // The age to which a fish can live.
     private static final int MAX_AGE = 20;
-    // The likelihood of a rabbit breeding.
+    // The likelihood of a fish breeding.
     private static final double BREEDING_PROBABILITY = 0.99;
     // The maximum number of births.
     private static final int MAX_LITTER_SIZE = 5;
@@ -28,10 +27,10 @@ public class Fish extends Animal
     
 
     /**
-     * Create a new rabbit. A rabbit may be created with age
+     * Create a new fish. A fish may be created with age
      * zero (a new born) or with a random age.
      * 
-     * @param randomAge If true, the rabbit will have a random age.
+     * @param randomAge If true, the fish will have a random age.
      * @param field The field currently occupied.
      * @param location The location within the field.
      */
@@ -64,8 +63,8 @@ public class Fish extends Animal
     }
     
      /**
-     * A rabbit can breed if it has reached the breeding age.
-     * @return true if the rabbit can breed, false otherwise.
+     * A fish can breed if it has reached the breeding age.
+     * @return true if the fish can breed, false otherwise.
      */
     public boolean canBreed()
     {
@@ -73,9 +72,10 @@ public class Fish extends Animal
     }
     
     /**
-     * This is what the rabbit does most of the time - it runs 
+     * This is what the fish does most of the time - it runs 
      * around. Sometimes it will breed or die of old age.
-     * @param newRabbits A list to return newly born rabbits.
+     * @param newFish A list to return newly born fish.
+     * @param timeOfDay The current time of day he acts in
      */
     public void act(List<Animal> newFish, String timeOfDay)
     {
@@ -95,25 +95,5 @@ public class Fish extends Animal
             }
         }
     }
-    
-    ///**
-    // * Check whether or not this rabbit is to give birth at this step.
-    // * New births will be made into free adjacent locations.
-    // * @param newRabbits A list to return newly born rabbits.
-    // */
-    //protected void giveBirth(List<Animal> newFish)
-    //{
-        // New rabbits are born into adjacent locations.
-        // Get a list of adjacent free locations.
-    //    Field field = getField();
-    //    List<Location> free = field.getFreeAdjacentLocations(getLocation());
-    //    int births = breed();
-    //    for(int b = 0; b < births && free.size() > 0; b++) {
-    //        Location loc = free.remove(0);
-    //        Fish young = new Fish(false, field, loc);
-    //        newFish.add(young);
-    //    }
-    //}
-        
     
 }

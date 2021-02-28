@@ -1,12 +1,9 @@
 #BlueJ class context
 comment0.target=Shark
-comment0.text=\r\n\ A\ simple\ model\ of\ a\ fox.\r\n\ Foxes\ age,\ move,\ eat\ rabbits,\ and\ die.\r\n\ \r\n\ @author\ David\ J.\ Barnes\ and\ Michael\ K\u00F6lling\r\n\ @version\ 2016.02.29\ (2)\r\n
+comment0.text=\r\n\ A\ simple\ model\ of\ a\ shark\r\n\ \r\n\ @author\ Dorin\ Dariana,\ Luke\ Ayres\r\n\ @version\ feb.2021\r\n
 comment1.params=randomAge\ field\ location
 comment1.target=Shark(boolean,\ Field,\ Location)
-comment1.text=\r\n\ Create\ a\ fox.\ A\ fox\ can\ be\ created\ as\ a\ new\ born\ (age\ zero\r\n\ and\ not\ hungry)\ or\ with\ a\ random\ age\ and\ food\ level.\r\n\ \r\n\ @param\ randomAge\ If\ true,\ the\ fox\ will\ have\ random\ age\ and\ hunger\ level.\r\n\ @param\ field\ The\ field\ currently\ occupied.\r\n\ @param\ location\ The\ location\ within\ the\ field.\r\n
-comment10.params=
-comment10.target=void\ incrementHunger()
-comment10.text=\r\n\ Make\ this\ fox\ more\ hungry.\ This\ could\ result\ in\ the\ fox's\ death.\r\n
+comment1.text=\r\n\ Create\ a\ shark.\ A\ shark\ can\ be\ created\ as\ a\ new\ born\ (age\ zero\r\n\ and\ not\ hungry)\ or\ with\ a\ random\ age\ and\ food\ level.\r\n\ \r\n\ @param\ randomAge\ If\ true,\ the\ shark\ will\ have\ random\ age\ and\ hunger\ level.\r\n\ @param\ field\ The\ field\ currently\ occupied.\r\n\ @param\ location\ The\ location\ within\ the\ field.\r\n
 comment2.params=field\ loc
 comment2.target=Animal\ getYoung(Field,\ Location)
 comment3.params=
@@ -21,8 +18,8 @@ comment7.params=
 comment7.target=int\ getFoodValue()
 comment8.params=
 comment8.target=boolean\ canBreed()
-comment8.text=\r\n\ A\ rabbit\ can\ breed\ if\ it\ has\ reached\ the\ breeding\ age.\r\n\ @return\ true\ if\ the\ rabbit\ can\ breed,\ false\ otherwise.\r\n
+comment8.text=\r\n\ A\ shark\ can\ breed\ if\ it\ has\ reached\ the\ breeding\ age.\r\n\ @return\ true\ if\ the\ shark\ can\ breed,\ false\ otherwise.\r\n
 comment9.params=newSharks\ timeOfDay
 comment9.target=void\ act(java.util.List,\ java.lang.String)
-comment9.text=\r\n\ This\ is\ what\ the\ fox\ does\ most\ of\ the\ time\:\ it\ hunts\ for\r\n\ rabbits.\ In\ the\ process,\ it\ might\ breed,\ die\ of\ hunger,\r\n\ or\ die\ of\ old\ age.\r\n\ @param\ field\ The\ field\ currently\ occupied.\r\n\ @param\ newFoxes\ A\ list\ to\ return\ newly\ born\ foxes.\r\n
-numComments=11
+comment9.text=\r\n\ This\ is\ what\ the\ shark\ does\ most\ of\ the\ time\:\ it\ hunts\ for\r\n\ fish.\ In\ the\ process,\ it\ might\ breed,\ die\ of\ hunger,\r\n\ or\ die\ of\ old\ age.\r\n\ @param\ timeOfDay\ The\ current\ time\ of\ day\ he\ acts\ in\r\n\ @param\ newSharks\ A\ list\ to\ return\ newly\ born\ sharks.\r\n
+numComments=10
