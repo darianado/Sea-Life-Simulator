@@ -8,10 +8,12 @@ import java.util.Iterator;
  * @author Dorin Dariana, Luke Ayres
  * @version feb.2021
  */
-public class Krill extends Animal
+public class Krill extends Prey
 {
     // Characteristics shared by all krills (class variables).
-
+    
+    // number of steps a krill can go before it has to eat again.
+    private static final int FOOD_VALUE =20;
     // The age to which a krill can live.
     private static final int MAX_AGE = 30;
     // The likelihood of a krill breeding.
@@ -34,11 +36,7 @@ public class Krill extends Animal
      */
     public Krill(boolean randomAge, Field field, Location location)
     {
-        super(field, location, 0);
-        
-        if(randomAge) {
-            setAge(rand.nextInt(MAX_AGE));
-        }
+        super(randomAge, field, location, 0);
     }
     
     public Animal getYoung(Field field, Location loc)
@@ -65,7 +63,10 @@ public class Krill extends Animal
     {
         return MAX_AGE;
     }
-    
+    public int getFoodValue()
+    {
+        return FOOD_VALUE;
+    }
     
     /**
      * This is what the krill does most of the time - it runs 
@@ -77,6 +78,8 @@ public class Krill extends Animal
     {
         incrementAge();
         incrementLastBred();
+        updateInfection();
+        eatPlant();
         if(isAlive()) {
             if(canBreed())
                 giveBirth(newKrills, timeOfDay);            

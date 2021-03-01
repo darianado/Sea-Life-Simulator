@@ -20,7 +20,8 @@ public class Field
     private int depth, width;
     // Storage for the animals.
     private Object[][] field;
-
+    // Storage for the current growth status of plants
+    private int[][] plantGrowth;
     /**
      * Represent a field of the given dimensions.
      * @param depth The depth of the field.
@@ -31,6 +32,7 @@ public class Field
         this.depth = depth;
         this.width = width;
         field = new Object[depth][width];
+        plantGrowth = new int[depth][width];
     }
     
     /**
@@ -41,10 +43,10 @@ public class Field
         for(int row = 0; row < depth; row++) {
             for(int col = 0; col < width; col++) {
                 field[row][col] = null;
+                plantGrowth[row][col] = rand.nextInt(20);
             }
         }
     }
-    
     /**
      * Clear the given location.
      * @param location The location to clear.
@@ -52,8 +54,24 @@ public class Field
     public void clear(Location location)
     {
         field[location.getRow()][location.getCol()] = null;
+        plantGrowth[location.getRow()][location.getCol()] = rand.nextInt(20);
     }
-    
+    public void incrementPlantGrowth()
+    {
+        for(int row = 0; row < depth; row++) {
+            for(int col = 0; col < width; col++) {
+                plantGrowth[row][col]++;
+            }
+        }
+    }
+    public void resetPlantGrowth(Location location)
+    {
+        plantGrowth[location.getRow()][location.getCol()] = 0;
+    }
+    public void resetPlantGrowth(int row, int col)
+    {
+        plantGrowth[row][col] = 0;
+    }
     /**
      * Place an animal at the given location.
      * If there is already an animal at the location it will
@@ -88,7 +106,14 @@ public class Field
     {
         return getObjectAt(location.getRow(), location.getCol());
     }
-    
+    public int getPlantGrowth(Location location)
+    {
+        return plantGrowth[location.getRow()][location.getCol()];
+    }
+    public int getPlantGrowth(int row, int col)
+    {
+        return plantGrowth[row][col];
+    }
     /**
      * Return the animal at the given location, if any.
      * @param row The desired row.

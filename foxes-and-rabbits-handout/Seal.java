@@ -99,6 +99,7 @@ public class Seal extends Predator
         incrementAge();
         incrementHunger();
         incrementLastBred();
+        updateInfection();
         if(isAlive()) {
              if(canBreed())
                 giveBirth(newSeals, timeOfDay);            

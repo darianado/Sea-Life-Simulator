@@ -9,7 +9,7 @@ public class Location
     // Row and column positions.
     private int row;
     private int col;
-
+    
     /**
      * Represent a row and column.
      * @param row The row.
@@ -34,7 +34,6 @@ public class Location
             return false;
         }
     }
-    
     /**
      * Return a string of the form row,column
      * @return A string representation of the location.

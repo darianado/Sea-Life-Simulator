@@ -7,10 +7,12 @@ import java.util.Random;
  * @author Dorin Dariana, Luke Ayres
  * @version feb.2021
  */
-public class Fish extends Animal
+public class Fish extends Prey
 {
     // Characteristics shared by all fish (class variables).
-
+    
+    // number of steps a fish can go before it has to eat again.
+    private static final int FOOD_VALUE =20;
     // The age to which a fish can live.
     private static final int MAX_AGE = 20;
     // The likelihood of a fish breeding.
@@ -34,10 +36,7 @@ public class Fish extends Animal
      */
     public Fish(boolean randomAge, Field field, Location location)
     {
-        super(field, location,0);
-        if(randomAge) {
-            setAge(rand.nextInt(MAX_AGE));
-        }
+        super(randomAge, field, location,0);
     }
     public Animal getYoung(Field field, Location loc)
     {
@@ -55,11 +54,14 @@ public class Fish extends Animal
     {
         return MAX_LITTER_SIZE;
     }
-     public int getMaxAge()
+    public int getMaxAge()
     {
         return MAX_AGE;
     }
-    
+    public int getFoodValue()
+    {
+        return FOOD_VALUE;
+    }
      /**
      * A fish can breed if it has reached the breeding age.
      * @return true if the fish can breed, false otherwise.
@@ -79,6 +81,8 @@ public class Fish extends Animal
     {
         incrementAge();
         incrementLastBred();
+        updateInfection();
+        eatPlant();
         if(isAlive()) {
              if(canBreed())
                 giveBirth(newFish, timeOfDay);            

@@ -94,6 +94,7 @@ public class Whale extends Predator
         incrementAge();
         incrementHunger();
         incrementLastBred();
+        updateInfection();
         if(isAlive()) {
              if(canBreed())
                 giveBirth(newWhales, timeOfDay);            

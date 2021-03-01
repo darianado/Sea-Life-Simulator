@@ -99,6 +99,7 @@ public class Shark extends Predator
         incrementAge();
         incrementHunger();
         incrementLastBred();
+        updateInfection();
         if(isAlive()) {
             if(canBreed())
                 giveBirth(newSharks, timeOfDay);           

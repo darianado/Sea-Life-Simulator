@@ -129,7 +129,9 @@ public class Simulator
                 it.remove();
             }
         }
-
+        
+        field.incrementPlantGrowth();
+        
         // Add the newly born animals to the main lists.
         animals.addAll(newAnimals);
 
@@ -146,11 +148,10 @@ public class Simulator
         step = 0;
         animals.clear();
         populate();
-
+        
         // Show the starting state in the view.
         view.showStatus(step, getTimeOfDay(), field);
     }
-
     /**
      * Randomly populate the field with foxes and rabbits.
      */

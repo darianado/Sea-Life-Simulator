@@ -22,10 +22,12 @@ public abstract class Animal
     private int lastBred;
     //the age of that animal
     private int age;
-    
+    //the amount of time before an animal dies from an infection or becomes better
     private final int INITIAL_INFECTION_TIME = 20;
     
+    //whether the animal is infected
     private boolean isInfected = false;
+    //the amount of steps until the animal dies or recovers from an infection
     private int infectionTime = INITIAL_INFECTION_TIME;
     
     private static final Random rand = Randomizer.getRandom();
@@ -170,6 +172,11 @@ public abstract class Animal
             newAnimals.add(young);
         }
     }
+    /**
+     * Decrements the infection time if the animal is infected
+     * If the timer reaches 0, there is a 90% chance of dying, otherwise the animal would recover
+     * Calls infectOthers method
+     */
     protected void updateInfection()
     {
         if(isInfected()) infectionTime--;
@@ -182,6 +189,9 @@ public abstract class Animal
         }
         infectOthers();
     }
+    /**
+     * if this animal is infected, all animals adjacent to this one are also infected
+     */
     private void infectOthers()
     {
         List<Location> notFree = getField().adjacentLocations(getLocation());

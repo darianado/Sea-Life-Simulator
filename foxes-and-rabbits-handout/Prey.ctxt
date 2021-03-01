@@ -1,0 +1,20 @@
+#BlueJ class context
+comment0.target=Prey
+comment0.text=\r\n\ \r\n\r\n\ @author\ Luke\ Ayres,\ Ariana\ Dorin\r\n\ @version\ 1\ March\ 2021\r\n
+comment1.params=randomAge\ field\ location\ age
+comment1.target=Prey(boolean,\ Field,\ Location,\ int)
+comment2.params=
+comment2.target=int\ getFoodValue()
+comment2.text=\r\n\ @return\ the\ specific\ maximum\ food\ level\r\n
+comment3.params=food
+comment3.target=void\ setFoodLevel(int)
+comment3.text=\r\n\ Set\ the\ current\ food\ level\ of\ the\ predator\r\n\ @param\ food\ The\ food\ level\ to\ be\ assigned\r\n
+comment4.params=
+comment4.target=int\ getFoodLevel()
+comment4.text=\r\n\ @return\ the\ current\ food\ level\r\n
+comment5.params=
+comment5.target=void\ eatPlant()
+comment6.params=
+comment6.target=void\ incrementHunger()
+comment6.text=\r\n\ Increment\ the\ hunger\ and\ set\ dead\ if\ too\ much\r\n\ time\ has\ passed\ since\ he\ last\ ate\r\n
+numComments=7
