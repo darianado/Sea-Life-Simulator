@@ -100,7 +100,7 @@ public class Seal extends Predator
         incrementHunger();
         incrementLastBred();
         if(isAlive()) {
-             if(!hasBred())
+             if(canBreed())
                 giveBirth(newSeals, timeOfDay);            
             // Move towards a source of food if found.
             Location newLocation = findFood();

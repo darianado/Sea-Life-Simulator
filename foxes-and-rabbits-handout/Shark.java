@@ -100,7 +100,7 @@ public class Shark extends Predator
         incrementHunger();
         incrementLastBred();
         if(isAlive()) {
-            if(!hasBred())
+            if(canBreed())
                 giveBirth(newSharks, timeOfDay);           
             // Move towards a source of food if found.
             Location newLocation = findFood();

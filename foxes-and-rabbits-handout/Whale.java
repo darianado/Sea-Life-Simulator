@@ -95,7 +95,7 @@ public class Whale extends Predator
         incrementHunger();
         incrementLastBred();
         if(isAlive()) {
-             if(!hasBred())
+             if(canBreed())
                 giveBirth(newWhales, timeOfDay);            
             // Move towards a source of food if found.
             Location newLocation = findFood();

@@ -11,8 +11,6 @@ public class Fish extends Animal
 {
     // Characteristics shared by all fish (class variables).
 
-    // The age at which a fish can start to breed.
-    private static final int BREEDING_AGE = 2;
     // The age to which a fish can live.
     private static final int MAX_AGE = 20;
     // The likelihood of a fish breeding.
@@ -68,7 +66,7 @@ public class Fish extends Animal
      */
     public boolean canBreed()
     {
-        return getAge() >= BREEDING_AGE;
+        return getAge() >= GAP_BETWEEN_BREEDING;
     }
     
     /**
@@ -82,7 +80,7 @@ public class Fish extends Animal
         incrementAge();
         incrementLastBred();
         if(isAlive()) {
-             if(!hasBred())
+             if(canBreed())
                 giveBirth(newFish, timeOfDay);            
             // Try to move into a free location.
             Location newLocation = getField().freeAdjacentLocation(getLocation());

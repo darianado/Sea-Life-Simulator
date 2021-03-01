@@ -22,7 +22,12 @@ public abstract class Animal
     private int lastBred;
     //the age of that animal
     private int age;
-
+    
+    private final int INITIAL_INFECTION_TIME = 20;
+    
+    private boolean isInfected = false;
+    private int infectionTime = INITIAL_INFECTION_TIME;
+    
     private static final Random rand = Randomizer.getRandom();
 
     /**
@@ -40,6 +45,7 @@ public abstract class Animal
         this.age=age;
         isMale = rand.nextInt(2) == 0;
         lastBred=getGapBreeding();
+        if(rand.nextDouble() < 0.05) infect();
     }
 
     /**
@@ -48,9 +54,9 @@ public abstract class Animal
      * @return true if he has bred recently and can't 
      *         breed right now or false otherwise
      */
-    public boolean hasBred()
+    public boolean canBreed()
     {
-        return lastBred < getGapBreeding();
+        return lastBred >= getGapBreeding();
     }
 
     /**
@@ -61,7 +67,10 @@ public abstract class Animal
     {
         return isMale;
     }
-
+    public boolean isInfected()
+    {
+        return isInfected;
+    }
     /**
      * Make this animal act - that is: make it do
      * whatever it wants/needs to do.
@@ -79,11 +88,6 @@ public abstract class Animal
      * @return the animal's specific maximum litter size
      */
     abstract public int getMaxLitterSize();
-
-     /**
-     * @return true if the animal can breed
-     */
-    abstract public boolean canBreed();
 
     /**
      * @return the animal's specific maximum life span
@@ -124,7 +128,7 @@ public abstract class Animal
      */
     public void updateBreeding() 
     {
-        if(lastBred>= getGapBreeding()) lastBred=0;
+        if(lastBred >= getGapBreeding()) lastBred=0;
     }
 
     /**
@@ -132,9 +136,12 @@ public abstract class Animal
      */
     public void incrementLastBred()
     {
-        lastBred++;
+        if(lastBred < getGapBreeding()) lastBred++;
     }
-  
+    public void infect()
+    {
+        isInfected = true;
+    }
     /**
      * Check whether or not this animal is to give birth at this step.
      * New animals will be made into free adjacent locations.
@@ -148,7 +155,7 @@ public abstract class Animal
         
         //the female cant give birth without a male mate
         Animal mate = findMale();
-        if(mate == null || mate.hasBred()) return;
+        if(mate == null || !mate.canBreed()) return;
 
         mate.updateBreeding();
         updateBreeding();
@@ -163,7 +170,32 @@ public abstract class Animal
             newAnimals.add(young);
         }
     }
+    protected void updateInfection()
+    {
+        if(isInfected()) infectionTime--;
+        if(infectionTime <= 0 && rand.nextDouble() < 0.9) setDead();
+        if(!alive) return;
+        if(infectionTime <= 0)
+        {
+            infectionTime = INITIAL_INFECTION_TIME;
+            isInfected = false;
+        }
+        infectOthers();
+    }
+    private void infectOthers()
+    {
+        List<Location> notFree = getField().adjacentLocations(getLocation());
 
+        Iterator<Location> iterator = notFree.iterator();
+
+        while(iterator.hasNext())
+        {
+            Location next = iterator.next();
+            if(next == null) continue;
+            Object nextLocation = field.getObjectAt(next);
+            if(nextLocation instanceof Animal) ((Animal)nextLocation).infect();
+        }
+    }
     /**
      * Get a new baby of that specific animal
      * @return a new born animal

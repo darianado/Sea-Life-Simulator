@@ -12,8 +12,6 @@ public class Krill extends Animal
 {
     // Characteristics shared by all krills (class variables).
 
-    // The age at which a krill can start to breed.
-    private static final int BREEDING_AGE = 2;
     // The age to which a krill can live.
     private static final int MAX_AGE = 30;
     // The likelihood of a krill breeding.
@@ -68,14 +66,6 @@ public class Krill extends Animal
         return MAX_AGE;
     }
     
-     /**
-     * A krill can breed if it has reached the breeding age.
-     * @return true if the krill can breed, false otherwise.
-     */
-    public boolean canBreed()
-    {
-        return getAge() >= BREEDING_AGE;
-    }
     
     /**
      * This is what the krill does most of the time - it runs 
@@ -88,7 +78,7 @@ public class Krill extends Animal
         incrementAge();
         incrementLastBred();
         if(isAlive()) {
-            if(!hasBred())
+            if(canBreed())
                 giveBirth(newKrills, timeOfDay);            
             // Try to move into a free location.
             Location newLocation = getField().freeAdjacentLocation(getLocation());
