@@ -55,14 +55,17 @@ public abstract class Animal
     
 
     /**
-     * Set the current food level of the predator
+     * Set the current food level of the animal
      * @param food The food level to be assigned
      */
     protected void setFoodLevel(int food)
     {
         foodLevel = food;
     }
-    
+    /**
+     * Increment the food level of the animal
+     * @param food The amount food level is increased by
+     */
     protected void addFoodLevel(int food)
     {
         foodLevel += food;

@@ -27,6 +27,9 @@ abstract public class Prey extends Animal
      */
     abstract int getFoodValue();
     
+    /**
+     * The animal eats a plant at its current location if the plant has a value of 2 or more
+     */
     public void eatPlant()
     {
         Field field = getField();

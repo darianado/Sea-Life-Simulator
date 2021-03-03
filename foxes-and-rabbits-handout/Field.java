@@ -56,6 +56,9 @@ public class Field
         field[location.getRow()][location.getCol()] = null;
         plantGrowth[location.getRow()][location.getCol()] = rand.nextInt(20);
     }
+    /**
+     * Increments the growth value for each plant on the field
+     */
     public void incrementPlantGrowth()
     {
         for(int row = 0; row < depth; row++) {
@@ -64,10 +67,16 @@ public class Field
             }
         }
     }
+    /**
+     * Resets the growth for a plant at a certain location
+     */
     public void resetPlantGrowth(Location location)
     {
         plantGrowth[location.getRow()][location.getCol()] = 0;
     }
+    /**
+     * Resets the growth for a plant at a certain location
+     */
     public void resetPlantGrowth(int row, int col)
     {
         plantGrowth[row][col] = 0;
@@ -106,10 +115,21 @@ public class Field
     {
         return getObjectAt(location.getRow(), location.getCol());
     }
+    /**
+     * Return the plant growth value at the given location, if any.
+     * @param location Where in the field.
+     * @return The plant growth value at the given location, or null if there is none.
+     */
     public int getPlantGrowth(Location location)
     {
         return plantGrowth[location.getRow()][location.getCol()];
     }
+    /**
+     * Return the plant growth value at the given location, if any.
+     * @param row the row of the plant
+     * @param col the column of the plant
+     * @return The plant growth value at the given location, or null if there is none.
+     */
     public int getPlantGrowth(int row, int col)
     {
         return plantGrowth[row][col];
