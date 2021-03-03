@@ -13,16 +13,16 @@ public class Shark extends Predator
     // Characteristics shared by all sharks (class variables).
 
     // The age to which a shark can live.
-    private static final int MAX_AGE = 50;
+    private static final int MAX_AGE = 70;
     // The likelihood of a shark breeding.
     private static final double BREEDING_PROBABILITY = 0.99;
     // The maximum number of births.
-    private static final int MAX_LITTER_SIZE = 2;
+    private static final int MAX_LITTER_SIZE = 3;
     // The food value of a single shark. In effect, this is the
     // number of steps a shark can go before it has to eat again.
     private static final int FOOD_VALUE = 15;
     //steps until he can breed again
-    private static final int GAP_BETWEEN_BREEDING = 5;
+    private static final int GAP_BETWEEN_BREEDING = 7;
     
     // A shared random number generator to control breeding.
     private static final Random rand = Randomizer.getRandom();
@@ -101,7 +101,7 @@ public class Shark extends Predator
         updateInfection();
         if(isAlive()) {
             if(canBreed())
-                giveBirth(newSharks, timeOfDay);           
+                {giveBirth(newSharks, timeOfDay);return;}           
             // Move towards a source of food if found.
             Location newLocation = findFood();
             if(newLocation == null) { 

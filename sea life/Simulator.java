@@ -18,8 +18,10 @@ public class Simulator
     private static final int DEFAULT_WIDTH = 120;
     // The default depth of the grid.
     private static final int DEFAULT_DEPTH = 80;
-    // The probability that an animal will be created in any given grid position.
-    private static final double CREATION_PROBABILITY = 0.05;
+    // The probability that a predator will be created in any given grid position.
+    private static final double PRED_CREATION_PROBABILITY = 0.05;
+    // The probability that a prey will be created in any given grid position.
+    private static final double PREY_CREATION_PROBABILITY = 0.05;
     
 
     // List of animals in the field.
@@ -161,28 +163,28 @@ public class Simulator
         field.clear();
         for(int row = 0; row < field.getDepth(); row++) {
             for(int col = 0; col < field.getWidth(); col++) {
-                if(rand.nextDouble() <= 0.10) {
+                if(rand.nextDouble() <= PREY_CREATION_PROBABILITY) {
                     Location location = new Location(row, col);
                     Krill krill = new Krill(true, field, location);
                     animals.add(krill);
                 }
-                else if(rand.nextDouble() <= CREATION_PROBABILITY) {
+                else if(rand.nextDouble() <= PREY_CREATION_PROBABILITY) {
                     Location location = new Location(row, col);
                     Fish fish = new Fish(true, field, location);
                     animals.add(fish);
                 }
-                else if(rand.nextDouble() <= CREATION_PROBABILITY) {
+                else if(rand.nextDouble() <= PRED_CREATION_PROBABILITY) {
                    Location location = new Location(row, col);
                     Whale whale = new Whale(true, field, location);
                     animals.add(whale);
                 }
                 
-                else if(rand.nextDouble() <= CREATION_PROBABILITY) {
+                else if(rand.nextDouble() <= PRED_CREATION_PROBABILITY) {
                     Location location = new Location(row, col);
                     Seal seal = new Seal(true, field, location);
                     animals.add(seal);
                 }
-                else if(rand.nextDouble() <= CREATION_PROBABILITY) {
+                else if(rand.nextDouble() <= PRED_CREATION_PROBABILITY) {
                     Location location = new Location(row, col);
                     Shark shark = new Shark(true, field, location);
                     animals.add(shark);

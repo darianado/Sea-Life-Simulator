@@ -1,59 +1,65 @@
 import java.util.List;
 import java.util.Random;
+import java.util.Iterator;
 
 /**
- * A simple model of a fish
+ * A simple model of a krill.
  * 
  * @author Dorin Dariana, Luke Ayres
  * @version feb.2021
  */
-public class Fish extends Prey
+public class Krill extends Prey
 {
-    // Characteristics shared by all fish (class variables).
+    // Characteristics shared by all krills (class variables).
     
-    // number of steps a fish can go before it has to eat again.
-    private static final int FOOD_VALUE = 5;
-    // The age to which a fish can live.
-    private static final int MAX_AGE = 20;
-    // The likelihood of a fish breeding.
-    private static final double BREEDING_PROBABILITY = 0.80;
+    // number of steps a krill can go before it has to eat again.
+    private static final int FOOD_VALUE = 2;
+    // The age to which a krill can live.
+    private static final int MAX_AGE = 80;
+    // The likelihood of a krill breeding.
+    private static final double BREEDING_PROBABILITY = 0.99;
     // The maximum number of births.
-    private static final int MAX_LITTER_SIZE = 3;
+    private static final int MAX_LITTER_SIZE = 7;
     //steps until he can breed again
-    private static final int GAP_BETWEEN_BREEDING = 10;
+    private static final int GAP_BETWEEN_BREEDING = 1;
+    
     // A shared random number generator to control breeding.
     private static final Random rand = Randomizer.getRandom();
     
-    
 
     /**
-     * Create a new fish. A fish may be created with age
+     * Create a new krill. A krill may be created with age
      * zero (a new born) or with a random age.
      * 
-     * @param randomAge If true, the fish will have a random age.
+     * @param randomAge If true, the krill will have a random age.
      * @param field The field currently occupied.
      * @param location The location within the field.
      */
-    public Fish(boolean randomAge, Field field, Location location)
+    public Krill(boolean randomAge, Field field, Location location)
     {
-        super(randomAge, field, location,0);
+        super(randomAge, field, location, 0);
     }
+    
     public Animal getYoung(Field field, Location loc)
     {
-        return new Fish(false,field,loc);
+        return new Krill(false,field,loc);
     }
+    
     public int getGapBreeding()
     {
         return GAP_BETWEEN_BREEDING;
     }
+    
     public double getBreedingProb()
     {
         return BREEDING_PROBABILITY;
     }
+    
     public int getMaxLitterSize()
     {
         return MAX_LITTER_SIZE;
     }
+    
     public int getMaxAge()
     {
         return MAX_AGE;
@@ -62,22 +68,14 @@ public class Fish extends Prey
     {
         return FOOD_VALUE;
     }
-     /**
-     * A fish can breed if it has reached the breeding age.
-     * @return true if the fish can breed, false otherwise.
-     */
-    public boolean canBreed()
-    {
-        return getAge() >= GAP_BETWEEN_BREEDING;
-    }
     
     /**
-     * This is what the fish does most of the time - it runs 
+     * This is what the krill does most of the time - it runs 
      * around. Sometimes it will breed or die of old age.
-     * @param newFish A list to return newly born fish.
+     * @param newKrills A list to return newly born krills.
      * @param timeOfDay The current time of day he acts in
      */
-    public void act(List<Animal> newFish, String timeOfDay)
+    public void act(List<Animal> newKrills, String timeOfDay)
     {
         eatPlant();
         incrementHunger();
@@ -86,8 +84,8 @@ public class Fish extends Prey
         updateInfection();
         
         if(isAlive()) {
-             if(canBreed())
-                giveBirth(newFish, timeOfDay);            
+            if(canBreed())
+                giveBirth(newKrills, timeOfDay);            
             // Try to move into a free location.
             Location newLocation = getField().freeAdjacentLocation(getLocation());
             if(newLocation != null) {
@@ -99,5 +97,6 @@ public class Fish extends Prey
             }
         }
     }
+
     
 }

@@ -2,7 +2,7 @@ import java.util.Random;
 /**
  * 
  *
- * @author Luke Ayres, Ariana Dorin
+ * @author Luke Ayres, Dariana Dorin
  * @version 1 March 2021
  */
 abstract public class Prey extends Animal

@@ -14,14 +14,14 @@ public class Seal extends Predator
     
     
     // The age to which a seal can live.
-    private static final int MAX_AGE = 60;
+    private static final int MAX_AGE = 30;
     // The likelihood of a seal breeding.
-    private static final double BREEDING_PROBABILITY = 0.99;
+    private static final double BREEDING_PROBABILITY = 0.70;
     // The maximum number of births.
     private static final int MAX_LITTER_SIZE = 2;
     // The food value of a single seal. In effect, this is the
     // number of steps a seal can go before it has to eat again.
-    private static final int FOOD_VALUE = 14;
+    private static final int FOOD_VALUE = 15;
     //steps until he can breed again
     private static final int GAP_BETWEEN_BREEDING = 5;
     
@@ -102,7 +102,7 @@ public class Seal extends Predator
         updateInfection();
         if(isAlive()) {
              if(canBreed())
-                giveBirth(newSeals, timeOfDay);            
+                {giveBirth(newSeals, timeOfDay);return;}            
             // Move towards a source of food if found.
             Location newLocation = findFood();
             if(newLocation == null) { 

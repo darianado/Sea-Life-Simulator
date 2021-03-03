@@ -14,16 +14,16 @@ public class Whale extends Predator
  
     
     // The age to which a whale can live.
-    private static final int MAX_AGE = 60;
+    private static final int MAX_AGE = 50;
     // The likelihood of a whale breeding.
     private static final double BREEDING_PROBABILITY = 0.99;
     // The maximum number of births.
     private static final int MAX_LITTER_SIZE = 2;
     // The food value of a single whale. In effect, this is the
     // number of steps a whale can go before it has to eat again.
-    private static final int FOOD_VALUE = 16;
+    private static final int FOOD_VALUE = 15;
     //the number of steps he needs between he can breed again
-    private static final int GAP_BETWEEN_BREEDING = 7;
+    private static final int GAP_BETWEEN_BREEDING = 5;
     
     // A shared random number generator to control breeding.
     private static final Random rand = Randomizer.getRandom();
@@ -97,7 +97,7 @@ public class Whale extends Predator
         updateInfection();
         if(isAlive()) {
              if(canBreed())
-                giveBirth(newWhales, timeOfDay);            
+                {giveBirth(newWhales, timeOfDay); return;}           
             // Move towards a source of food if found.
             Location newLocation = findFood();
             if(newLocation == null) { 

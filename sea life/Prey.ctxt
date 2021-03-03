@@ -1,6 +1,6 @@
 #BlueJ class context
 comment0.target=Prey
-comment0.text=\r\n\ \r\n\r\n\ @author\ Luke\ Ayres,\ Ariana\ Dorin\r\n\ @version\ 1\ March\ 2021\r\n
+comment0.text=\r\n\ \r\n\r\n\ @author\ Luke\ Ayres,\ Dariana\ Dorin\r\n\ @version\ 1\ March\ 2021\r\n
 comment1.params=randomAge\ field\ location\ age
 comment1.target=Prey(boolean,\ Field,\ Location,\ int)
 comment2.params=
