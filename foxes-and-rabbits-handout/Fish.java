@@ -12,15 +12,15 @@ public class Fish extends Prey
     // Characteristics shared by all fish (class variables).
     
     // number of steps a fish can go before it has to eat again.
-    private static final int FOOD_VALUE =20;
+    private static final int FOOD_VALUE = 5;
     // The age to which a fish can live.
     private static final int MAX_AGE = 20;
     // The likelihood of a fish breeding.
-    private static final double BREEDING_PROBABILITY = 0.99;
+    private static final double BREEDING_PROBABILITY = 0.80;
     // The maximum number of births.
-    private static final int MAX_LITTER_SIZE = 5;
-    
-    private static final int GAP_BETWEEN_BREEDING = 5;
+    private static final int MAX_LITTER_SIZE = 3;
+    //steps until he can breed again
+    private static final int GAP_BETWEEN_BREEDING = 10;
     // A shared random number generator to control breeding.
     private static final Random rand = Randomizer.getRandom();
     
@@ -79,10 +79,12 @@ public class Fish extends Prey
      */
     public void act(List<Animal> newFish, String timeOfDay)
     {
+        eatPlant();
+        incrementHunger();
         incrementAge();
         incrementLastBred();
         updateInfection();
-        eatPlant();
+        
         if(isAlive()) {
              if(canBreed())
                 giveBirth(newFish, timeOfDay);            

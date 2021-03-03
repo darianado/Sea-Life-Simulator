@@ -24,11 +24,12 @@ public abstract class Animal
     private int age;
     //the amount of time before an animal dies from an infection or becomes better
     private final int INITIAL_INFECTION_TIME = 20;
-    
     //whether the animal is infected
     private boolean isInfected = false;
     //the amount of steps until the animal dies or recovers from an infection
     private int infectionTime = INITIAL_INFECTION_TIME;
+    //the food level counter until the animal starves
+    private int foodLevel;
     
     private static final Random rand = Randomizer.getRandom();
 
@@ -48,6 +49,43 @@ public abstract class Animal
         isMale = rand.nextInt(2) == 0;
         lastBred=getGapBreeding();
         if(rand.nextDouble() < 0.05) infect();
+    }
+    
+    
+    
+
+    /**
+     * Set the current food level of the predator
+     * @param food The food level to be assigned
+     */
+    protected void setFoodLevel(int food)
+    {
+        foodLevel = food;
+    }
+    
+    protected void addFoodLevel(int food)
+    {
+        foodLevel += food;
+    }
+
+    /**
+     * @return the current food level
+     */
+    protected int getFoodLevel()
+    {
+        return foodLevel;
+    }
+    
+    /**
+     * Increment the hunger and set dead if too much
+     * time has passed since he last ate
+     */
+    protected void incrementHunger()
+    {
+        foodLevel--;
+        if(foodLevel <= 0) {
+            setDead();
+        }
     }
 
     /**
@@ -69,10 +107,12 @@ public abstract class Animal
     {
         return isMale;
     }
+    
     public boolean isInfected()
     {
         return isInfected;
     }
+    
     /**
      * Make this animal act - that is: make it do
      * whatever it wants/needs to do.

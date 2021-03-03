@@ -161,12 +161,7 @@ public class Simulator
         field.clear();
         for(int row = 0; row < field.getDepth(); row++) {
             for(int col = 0; col < field.getWidth(); col++) {
-                if(rand.nextDouble() <= CREATION_PROBABILITY) {
-                    Location location = new Location(row, col);
-                    Whale whale = new Whale(true, field, location);
-                    animals.add(whale);
-                }
-                else if(rand.nextDouble() <= CREATION_PROBABILITY) {
+                if(rand.nextDouble() <= 0.10) {
                     Location location = new Location(row, col);
                     Krill krill = new Krill(true, field, location);
                     animals.add(krill);
@@ -176,6 +171,12 @@ public class Simulator
                     Fish fish = new Fish(true, field, location);
                     animals.add(fish);
                 }
+                else if(rand.nextDouble() <= CREATION_PROBABILITY) {
+                   Location location = new Location(row, col);
+                    Whale whale = new Whale(true, field, location);
+                    animals.add(whale);
+                }
+                
                 else if(rand.nextDouble() <= CREATION_PROBABILITY) {
                     Location location = new Location(row, col);
                     Seal seal = new Seal(true, field, location);

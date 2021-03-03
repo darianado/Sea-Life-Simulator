@@ -13,14 +13,14 @@ public class Krill extends Prey
     // Characteristics shared by all krills (class variables).
     
     // number of steps a krill can go before it has to eat again.
-    private static final int FOOD_VALUE =20;
+    private static final int FOOD_VALUE = 30;
     // The age to which a krill can live.
-    private static final int MAX_AGE = 30;
+    private static final int MAX_AGE = 80;
     // The likelihood of a krill breeding.
     private static final double BREEDING_PROBABILITY = 0.99;
     // The maximum number of births.
     private static final int MAX_LITTER_SIZE = 7;
-    
+    //steps until he can breed again
     private static final int GAP_BETWEEN_BREEDING = 2;
     // A shared random number generator to control breeding.
     private static final Random rand = Randomizer.getRandom();
@@ -76,10 +76,12 @@ public class Krill extends Prey
      */
     public void act(List<Animal> newKrills, String timeOfDay)
     {
+        eatPlant();
+        incrementHunger();
         incrementAge();
         incrementLastBred();
         updateInfection();
-        eatPlant();
+        
         if(isAlive()) {
             if(canBreed())
                 giveBirth(newKrills, timeOfDay);            

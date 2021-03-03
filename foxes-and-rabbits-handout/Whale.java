@@ -12,19 +12,19 @@ public class Whale extends Predator
 {
     // Characteristics shared by all whales (class variables).
  
-    // The age at which a whale can start to breed.
-    private static final int BREEDING_AGE = 10;
+    
     // The age to which a whale can live.
-    private static final int MAX_AGE = 100;
+    private static final int MAX_AGE = 60;
     // The likelihood of a whale breeding.
     private static final double BREEDING_PROBABILITY = 0.99;
     // The maximum number of births.
-    private static final int MAX_LITTER_SIZE = 3;
+    private static final int MAX_LITTER_SIZE = 2;
     // The food value of a single whale. In effect, this is the
     // number of steps a whale can go before it has to eat again.
-    private static final int FOOD_VALUE =20;
+    private static final int FOOD_VALUE = 16;
     //the number of steps he needs between he can breed again
-    private static final int GAP_BETWEEN_BREEDING = 5;
+    private static final int GAP_BETWEEN_BREEDING = 7;
+    
     // A shared random number generator to control breeding.
     private static final Random rand = Randomizer.getRandom();
     
@@ -79,7 +79,7 @@ public class Whale extends Predator
      */
     public boolean canBreed()
     {
-        return getAge() >= BREEDING_AGE;
+        return getAge() >= GAP_BETWEEN_BREEDING;
     }
     
     /**

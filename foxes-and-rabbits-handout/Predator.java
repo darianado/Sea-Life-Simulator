@@ -12,8 +12,8 @@ abstract public class Predator extends Animal
     
     private static final Random rand = Randomizer.getRandom();
 
-    //the food level counter until the animal starves
-    private int foodLevel;
+    
+    
     //the type of animal he eats
     private Class preyType ;
 
@@ -31,10 +31,10 @@ abstract public class Predator extends Animal
         this.preyType= prey;
         if(randomAge) {
             setAge(rand.nextInt(getMaxAge()));
-            foodLevel = rand.nextInt(getFoodValue());
+            setFoodLevel(rand.nextInt(getFoodValue()));
         }
         else {
-            foodLevel = getFoodValue();
+            setFoodLevel(getFoodValue());
         }
     }
 
@@ -42,24 +42,7 @@ abstract public class Predator extends Animal
      * @return the specific maximum food level
      */
     abstract int getFoodValue();
-
-    /**
-     * Set the current food level of the predator
-     * @param food The food level to be assigned
-     */
-    protected void setFoodLevel(int food)
-    {
-        foodLevel = food;
-    }
-
-    /**
-     * @return the current food level
-     */
-    protected int getFoodLevel()
-    {
-        return foodLevel;
-    }
-
+    
     /**
      * Look for a pray to eat in the adjacent locations 
      */
@@ -75,24 +58,12 @@ abstract public class Predator extends Animal
                 Animal prey = (Animal) animal;
                 if(prey.isAlive()) {
                     prey.setDead();
-                    foodLevel = getFoodValue();
+                    setFoodLevel(getFoodValue());
                     return where;
                 }
-
             }
         }
         return null;
     }
 
-    /**
-     * Increment the hunger and set dead if too much
-     * time has passed since he last ate
-     */
-    protected void incrementHunger()
-    {
-        foodLevel--;
-        if(foodLevel <= 0) {
-            setDead();
-        }
-    }
 }
